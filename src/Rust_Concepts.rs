@@ -79,7 +79,6 @@ mod FuncsAndControlFlow {
         println!("The Secret Number is:: {}", sec);
 
         for i in 0..3 {
-            let num = get_num();
             let mut guess = String::new();
 
             println!("Enter a number");
