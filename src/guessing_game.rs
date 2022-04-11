@@ -1,3 +1,4 @@
+use colored::*;
 use rand::Rng;
 use std::{cmp::Ordering, io};
 
@@ -23,12 +24,12 @@ pub fn Runner() {
         // debug_line:: print!("The Guessed number is:: {}", guess)
 
         match x.cmp(&sec_num) {
-            Ordering::Less => println!("Too Small"),
+            Ordering::Less => println!("{}", "Too Small".red()),
             Ordering::Equal => {
-                println!("Correct");
+                println!("{}", "Correct".green());
                 break;
             }
-            Ordering::Greater => println!("Too big"),
+            Ordering::Greater => println!("{}", "Too big".red()),
         }
     }
 }
