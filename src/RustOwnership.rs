@@ -3,7 +3,7 @@
 #![allow(non_snake_case)]
 
 mod Basics {
-    use std::io::{self, Read};
+    use std::io;
 
     pub fn scopes() {
         let x1 = 32;
@@ -116,7 +116,8 @@ mod Basics {
         greeting // Step: 4
     }
 
-    pub fn simple_mutable_greeting(s: &mut str) {
+    pub fn simple_mutable_greeting(s: &mut String) {
+        println!("Enter Your name: ");
         let mut name = String::new();
         io::stdin()
             .read_line(&mut name)
@@ -160,7 +161,42 @@ mod Basics {
         // A return ptr with no actual value associated in the backend.
     }
 
-    fn first_word(str_val: &mut str) -> () {}
+    fn first_word(str_val: &String) -> usize {
+        let bytes = str_val.as_bytes();
+        // This function converts the string characters to unicode numbers
+        // and stores them as an array of integers.
+        println!("{}", b' ');
+        // Use iter().enumerate() to get index and value for each collection element.
+        for (ind, &elem) in bytes.iter().enumerate() {
+            // b' ' converts the value of ' ' to its unicode value(i-guess)!!
+            if elem == b' ' {
+                return ind;
+            }
+        }
+        str_val.len() // If entire string is just one word
+    }
+    fn second_word_via_slicing(s: &String) -> &str {
+        let bytes = s.as_bytes(); // Get the array of Character-Bytes
+        let mut indxx = 0;
+        for (ind, &elem) in bytes.iter().enumerate() {
+            if elem == b' ' {
+                // Check for an empty space.. A complete word till here
+                indxx = ind;
+                break;
+            }
+        }
+        let s = &s[indxx + 1..];
+        let bytes = s.as_bytes();
+
+        for (ind, &elem) in bytes.iter().enumerate() {
+            if elem == b' ' {
+                return &s[..ind];
+            }
+        }
+
+        &s[..] // Return entire string!!
+    }
+
     pub fn Slicing() {
         /*
             Slices:
@@ -168,8 +204,26 @@ mod Basics {
                 2. Donot take ownership of the actual data. Just refernece data.
                 3. Tied to the Orignal data.!!
         */
-        let mut s = "Hello";
-        let name = simple_mutable_greeting(&mut s);
+        let mut s = String::from("Hello, ");
+        simple_mutable_greeting(&mut s);
+
+        let gr_slice = &s[0..]; // Get the entire slice, starting index 1.
+        println!("{}", gr_slice);
+
+        // Problem: Getting first word from a String!!
+        let ind = first_word(&s);
+        println!("The First word is {}", &s[..ind]); // Here, I'm using slicing, which is a bit cheating.
+
+        let mut s = String::from("Hello, ");
+        simple_mutable_greeting(&mut s);
+
+        let sec_word = second_word_via_slicing(&s);
+        println!("Second word via Slicing!! {}", sec_word);
+
+        // Array Slice
+        let a = [0; 10];
+        let sl = &a[..5];
+        println!("{:?}", sl)
     }
 }
 
@@ -179,4 +233,5 @@ pub fn Runner() {
     // Basics::ownership_in_funcs();
     // Basics::borrowing_reference_passing();
     // Basics::mut_borrow();
+    Basics::Slicing();
 }
