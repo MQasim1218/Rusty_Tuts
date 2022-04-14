@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use colored::*;
 use rand::Rng;
 use std::{cmp::Ordering, io};
