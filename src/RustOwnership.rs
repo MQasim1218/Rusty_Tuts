@@ -3,6 +3,8 @@
 #![allow(non_snake_case)]
 
 mod Basics {
+    use std::io::{self, Read};
+
     pub fn scopes() {
         let x1 = 32;
         {
@@ -48,19 +50,133 @@ mod Basics {
         println!("Printing s4:: {}", &s4);
     }
 
-    fn takes_ownership(s: &str) {}
+    fn takes_ownership<T>(s: T) {}
+    fn gives_own_ship<T>(val: T) -> T {
+        println!("We have ownership of the value");
+        val
+    }
+
     pub fn ownership_in_funcs() {
         println!("Onwer Ship in functions now!!\n");
         let s1 = "Qasim";
         takes_ownership(s1);
-        print!("String Slice => {}", s1); // Slices are copied, thus ownership is not moved!!
+        println!("String Slice => {}", s1); // Slices are copied, thus ownership is not moved!!
+
+        let s2 = String::from(s1);
+        takes_ownership(s2);
+        // println!("Value of S2 is moved!! => {}", s2); Err: Value moved in the above line!!
+
+        let s2 = String::from(s1); // Shadowing used here!! Reinstantiate the variable (to regain ownership!!)
+        let s3 = gives_own_ship(s2);
+        // print!("S2 => {}, S3 => {}", s2, s3); S2 has been borrowed, and returned to S3, thus it no longer exists!!
+        println!("S3 => {}", s3);
     }
-    pub fn borrowing_reference_passing() {}
-    pub fn mut_borrow() {}
+
+    fn problematic_example(val: String) -> (String, usize) {
+        let len = val.len();
+        (val, len)
+    }
+    fn less_tesious_method(val: &String) -> usize {
+        val.len()
+    }
+
+    pub fn borrowing_reference_passing() {
+        /*
+            Rules for references!!
+                1. No two mutable references in a scope!!
+                2. Any number of immutable references!!
+                3. No immutable_refs in scope in presence of mut_ref.
+        */
+
+        let str1 = String::from("Islamabad!!");
+        // Here, we transfer the ownership to the function!!
+        let (str2, mut len) = problematic_example(str1);
+        println!("The lenght of String \'{}\' is :: {}", str2, len);
+
+        println!("\nSame Work!! Less tedious way!!");
+        len = less_tesious_method(&str2);
+        println!("The lenght of String '{}' is {}", &str2, len);
+    }
+
+    fn greet_me(s: String) -> String {
+        /*
+            Longer method
+            Steps:
+                1. Create a new String.
+                2. Get the input
+                3. Create a third string by adding the prev 2 Strings.
+                4. Return the last String.
+        */
+        let mut name = String::new(); // Step: 1
+        io::stdin()
+            .read_line(&mut name)
+            .expect("Cant read the name"); // Step: 2
+
+        let greeting = s + &name; // Step: 3
+        greeting // Step: 4
+    }
+
+    pub fn simple_mutable_greeting(s: &mut str) {
+        let mut name = String::new();
+        io::stdin()
+            .read_line(&mut name)
+            .expect("Cant read the name");
+        s.push_str(&name);
+    }
+    pub fn mut_borrow() {
+        println!("Working with Mutable Borrows!!");
+        let s1 = String::from("Hello, ");
+        let greeting = greet_me(s1);
+        print!("{}", greeting);
+
+        let mut s2 = String::from("Hello, ");
+        print!("Simpler Greeting\n");
+        simple_mutable_greeting(&mut s2);
+        println!("The Mutated String is {}", s2);
+
+        // Cant make 2 mutable references of a Same Variable!!
+        let s3 = &mut s2;
+        let s4 = &mut s2;
+        let s5 = &s2;
+
+        // The error is Identified when we try to manipulate the references
+        // (The lifetime is as long as the variable is in use) -
+        // Dies before the scope is exited,
+        // thus allows for another mut or immut reference!!).
+        // println!("{} {} {}", s3, s4, s5) -- The error is encountered here!!
+    }
+
+    // fn getStr() -> &String {
+    //     let s = String::new();
+    //     // Since the String literal 'S' is a local variable, it is dropped from scope,
+    //     // however the pointer is returned, thus a dangling pointer.
+    //     &s
+    // }
+
+    // This is a demonstration on how to get a dangling pointer in seconds.
+    pub fn dangling_ptr() {
+
+        // let new_str = getStr();
+        // A return ptr with no actual value associated in the backend.
+    }
+
+    fn first_word(str_val: &mut str) -> () {}
+    pub fn Slicing() {
+        /*
+            Slices:
+                1. Let user reference a contiguous part of a collection data.
+                2. Donot take ownership of the actual data. Just refernece data.
+                3. Tied to the Orignal data.!!
+        */
+        let mut s = "Hello";
+        let name = simple_mutable_greeting(&mut s);
+    }
 }
 
 pub fn Runner() {
     // Basics::scopes();
     // Basics::var_n_data();
-    Basics::ownership_in_funcs();
+    // Basics::ownership_in_funcs();
+    // Basics::borrowing_reference_passing();
+    // Basics::mut_borrow();
 }
