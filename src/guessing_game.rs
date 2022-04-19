@@ -1,10 +1,10 @@
 #![allow(dead_code)]
+#![allow(non_snake_case)]
 
 use colored::*;
 use rand::Rng;
 use std::{cmp::Ordering, io};
 
-#[allow(non_snake_case)]
 pub fn Runner() {
     println!("Welcome, Noob");
     let sec_num = rand::thread_rng().gen_range(0..101);
