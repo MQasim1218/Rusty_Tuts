@@ -104,7 +104,7 @@ mod Rect_Example {
 
         let rect = Rectangle::new_def(&rect);
         println!("Rectangle 2 {:#?}", rect);
-        println!("Area of rectangle_3: {}", rect.get_area());
+        println!(r#"Area of rectangle_3: {}"#, rect.get_area());
     }
 }
 
