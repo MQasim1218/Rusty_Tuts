@@ -1,8 +1,8 @@
 #![allow(non_snake_case)]
 
 mod RustOwnership;
-mod guessing_game;
 mod rust_concepts;
+mod guessing_game;
 mod structs;
 
 fn main() {
