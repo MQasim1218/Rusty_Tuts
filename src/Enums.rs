@@ -31,18 +31,77 @@ mod enums {
 
 mod option_enum {
 
-    // enum Option<T> {
-    //     Some(T),
-    //     None,
-    // }
+    pub fn matchin_states() {
+        #[derive(Debug)]
+        enum Cont {
+            Europe,
+            Asia,
+            America(State),
+            Africa,
+            Australia,
+            Antarctica,
+            Arctic,
+        }
 
-    fn inbuilt_options() {
+        #[derive(Debug)]
+        enum State {
+            LosAngeles,
+            California,
+            NewYork,
+            Texas,
+            Florida,
+        }
+
+        fn match_st(cont: Cont) {
+            match cont {
+                Cont::Europe => println!("Hello from {:?}", cont),
+                Cont::Asia => println!("Hello from {:?}", cont),
+                Cont::America(state) => match state {
+                    State::LosAngeles => println!("Hello from the American state {:?}", state),
+                    State::California => println!("Hello from the American state {:?}", state),
+                    State::NewYork => println!("Hello from the American state {:?}", state),
+                    State::Texas => println!("Hello from the American state {:?}", state),
+                    State::Florida => println!("Hello from the American state {:?}", state),
+                },
+                Cont::Africa => println!("Hello from {:?}", cont),
+                Cont::Australia => println!("Hello from {:?}", cont),
+                Cont::Antarctica => println!("Hello from {:?}", cont),
+                Cont::Arctic => println!("Hello from {:?}", cont),
+            }
+        }
+
+        match_st(Cont::Africa);
+        match_st(Cont::America(State::NewYork))
+    }
+
+    pub fn inbuilt_options() {
         let x1 = Some(45);
         let str1 = Some(String::from("GoodBye, Mars"));
         let no_num: Option<i32> = None;
 
         let res = x1.unwrap_or(0) + no_num.unwrap_or(0);
+        println!("The value of res is {}", res);
     }
 }
 
-pub fn Runner() {}
+mod ret_opt {
+
+    fn ret_opt<T>(val: Option<T>) -> Option<T> {
+        match val {
+            Some(value) => Some(value), // For any value, return the value.
+            _ => None,                  // For any other possible case
+        }
+    }
+
+    pub fn runner() {
+        println!(
+            "Getting value of a fn that returns an option, {}",
+            ret_opt(Some(50)).unwrap_or(0)
+        );
+    }
+}
+
+pub fn Runner() {
+    // option_enum::inbuilt_options();
+    ret_opt::runner();
+}

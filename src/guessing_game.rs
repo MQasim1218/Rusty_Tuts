@@ -8,7 +8,7 @@ use std::{cmp::Ordering, io};
 pub fn Runner() {
     println!("Welcome, Noob");
     let sec_num = rand::thread_rng().gen_range(0..101);
-
+    
     loop {
         println!("Enter a guess number!!");
 
