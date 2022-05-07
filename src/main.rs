@@ -1,11 +1,11 @@
 #![allow(non_snake_case)]
 
-mod RustOwnership;
-mod rust_concepts;
-mod guessing_game;
-mod structs;
 mod Enums;
-mod common_collections;
+mod RustOwnership;
+mod collections;
+mod guessing_game;
+mod rust_concepts;
+mod structs;
 
 fn main() {
     println!("Hello, world!");
@@ -13,5 +13,6 @@ fn main() {
     // Rust_Concepts::Runner()
     // RustOwnership::Runner();
     // structs::Runner();
-    Enums::Runner();
+    // Enums::Runner();
+    collections::runner();
 }
