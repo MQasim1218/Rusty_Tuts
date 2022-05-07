@@ -5,6 +5,7 @@ mod rust_concepts;
 mod guessing_game;
 mod structs;
 mod Enums;
+mod common_collections;
 
 fn main() {
     println!("Hello, world!");
