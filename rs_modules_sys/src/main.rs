@@ -7,6 +7,8 @@
     Functions: Small chunks of functional code
 */
 
+// Too much to say.. Will cover in implementations.
+
 fn main() {
     println!("Hello, world!");
 }
