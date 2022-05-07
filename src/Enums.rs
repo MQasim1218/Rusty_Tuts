@@ -101,7 +101,27 @@ mod ret_opt {
     }
 }
 
+mod if_let_pattMatching {
+    // If_let: shorter way to write match exprs when only matchig for one value
+    pub fn runner() {
+        // consider this!!
+        let x = Some(3);
+        match x {
+            Some(5) => println!("Value of x is {}", x.unwrap()),
+            Some(_) => println!("Not valid value"),
+            None => println!("Not a value"),
+        } // here we are checking is only x is 5, otherwise discard.. We can shorten the syntax using if_let_pattMatching!!
+
+        if let Some(5) = x {
+            println!("Correct value");
+        } else {
+            println!("Incorrect value");
+        }
+    }
+}
+
 pub fn Runner() {
     // option_enum::inbuilt_options();
-    ret_opt::runner();
+    // ret_opt::runner();
+    if_let_pattMatching::runner();
 }
