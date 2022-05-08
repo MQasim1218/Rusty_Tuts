@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 #![allow(unused_assignments)]
+#![allow(non_camel_case_types)]
 
 mod vectors {
     use std::vec;
@@ -16,8 +17,8 @@ mod vectors {
         #[derive(Debug)]
         enum shape {
             Circle(u16),
-            Square(u16),
             Rectangle(u16, u16),
+            Square(u16),
         }
 
         let mut vec1: Vec<shape> = Vec::new();
