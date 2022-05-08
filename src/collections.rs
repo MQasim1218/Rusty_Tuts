@@ -9,11 +9,31 @@ mod vectors {
         // vects_vs_arys();
         // vect_indexes();
         // iterating_vects();
-        single_value_types_workaround()
+        // single_value_types_workaround()
     }
 
     fn single_value_types_workaround() {
-        
+        #[derive(Debug)]
+        enum shape {
+            Circle(u16),
+            Square(u16),
+            Rectangle(u16, u16),
+        }
+
+        let mut vec1: Vec<shape> = Vec::new();
+
+        vec1.push(shape::Circle(12));
+        vec1.push(shape::Square(12));
+        vec1.push(shape::Rectangle(8, 8));
+
+        // When reading values from a enum vector, matching is required
+        let f = match &vec1[2] {
+            shape::Circle(x) => shape::Circle(*x),
+            shape::Square(x) => shape::Square(*x),
+            shape::Rectangle(x, y) => shape::Rectangle(*x, *y),
+        };
+
+        println!("Shape is {:?}", f);
     }
 
     fn iterating_vects() {
@@ -102,7 +122,9 @@ mod hashmaps {
 }
 
 mod strings {
-    pub fn code() {}
+    pub fn code() {
+        // In Rust, elements are stored as collections of UTF-8 encoded bytes: more on this later!!
+    }
 }
 
 pub fn runner() {
