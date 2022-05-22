@@ -7,10 +7,12 @@ mod vectors {
     use std::vec;
 
     pub fn code() {
-        // vects_vs_arys();
-        // vect_indexes();
-        // iterating_vects();
-        // single_value_types_workaround()
+        /*
+            vects_vs_arys();
+            vect_indexes();
+            iterating_vects();
+            single_value_types_workaround()
+        */
     }
 
     fn single_value_types_workaround() {
