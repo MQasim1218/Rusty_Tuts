@@ -4,10 +4,10 @@ mod Enums;
 mod Err_handling;
 mod RustOwnership;
 mod collections;
+mod generics;
 mod guessing_game;
 mod rust_concepts;
 mod structs;
-mod generics;
 
 fn main() {
     println!("Hello, world!");
@@ -17,5 +17,6 @@ fn main() {
     // structs::Runner();
     // Enums::Runner();
     // collections::runner();
-    Err_handling::runner()
+    // Err_handling::runner()
+    generics::runner()
 }
